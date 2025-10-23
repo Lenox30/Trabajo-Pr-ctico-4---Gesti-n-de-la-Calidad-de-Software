@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1                        # Versión de la API
+kind: Ingress                                           # Tipo de recurso          
+metadata:
+  name: myapp-production
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /       # Reescribe la URL al backend porque usamos path: /
+spec:                                                   # Especificaciones del Ingress
+  ingressClassName: nginx                            # Clase de Ingress a usar            
+  rules:
+  - host: myapp.local                                  # Dominio para acceder a la aplicación             
+    http:
+      paths:
+      - path: /
+        pathType: Prefix  
+        backend:
+          service:
+            name: myapp-v1                              # Todo el tráfico va a V1 inicialmente
+            port:
+              number: 80

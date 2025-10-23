@@ -1,0 +1,25 @@
+apiVersion: apps/v1 # Especifica la versión de la API
+kind: Deployment    # Tipo de recurso
+metadata:           # Metadatos del recurso
+  name: myapp-v1
+  labels:
+    app: myapp
+    version: v1
+spec:               # Especificaciones del despliegue
+  replicas: 2  # 2 pods para V1
+  selector:       # Selector para los pods
+    matchLabels:  
+      app: myapp  
+      version: v1 
+  template:       # Plantilla para los pods
+    metadata:
+      labels:
+        app: myapp
+        version: v1
+    spec:           # Especificaciones del pod
+      containers:
+      - name: nginx
+        image: myapp:v1
+        imagePullPolicy: Never  # Usa la imagen local de Minikube
+        ports:
+        - containerPort: 80

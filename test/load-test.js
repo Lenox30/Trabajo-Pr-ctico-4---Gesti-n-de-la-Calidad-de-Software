@@ -9,13 +9,13 @@ const v2Counter = new Counter('v2_requests');
 // --- Configuración de la prueba de carga ---
 export const options = {
   stages: [
-    { duration: '30s', target: 20 }, // Sube de 0 a 20 usuarios en 30 segundos
-    { duration: '1m', target: 20 },  // Mantiene 20 usuarios durante 1 minuto
-    { duration: '10s', target: 0 },  // Baja a 0 usuarios en 10 segundos
+    { duration: '10s', target: 10000 },  // Sube muy rápido a 10k
+    { duration: '30s', target: 10000 },  // Mantiene 10k
+    { duration: '10s', target: 0 },
   ],
-  // Umbrales: La prueba fallará si más del 1% de las peticiones dan error.
   thresholds: {
-    'http_req_failed': ['rate<0.01'], 
+    'http_req_failed': ['rate<0.01'],     // Probablemente falle aquí
+    'http_req_duration': ['p(95)<500'],   // O aquí por latencia
   },
 };
 
